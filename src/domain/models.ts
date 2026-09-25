@@ -13,7 +13,7 @@ export interface SystemDependency {id:string;kind:'MODEL'|'RAG_SOURCE'|'TOOL'|'S
 export interface SystemArchitecture {systemId:string;components:SystemDependency[]}
 export interface RiskAssessment {id:string;systemId:string;likelihood:number;impact:number;exposure:number;residualRisk:number;assessedAt:string;owner:string}
 export interface Risk {id:string;assessmentId:string;title:string;severity:Severity;status:string}
-export interface RiskAcceptance {id:string;riskId:string;owner:string;rationale:string;expiresAt:string;approvedBy:string}
+export interface RiskAcceptance {id:string;riskId:string;owner:string;rationale:string;expiresAt:string;approvedBy:string;timestamp:string}
 export interface Framework {id:string;name:string;shortName:string;issuer:string;type:string;versions:FrameworkVersion[];activeVersionId:string}
 export interface FrameworkVersion {id:string;frameworkId:string;version:string;status:EntityStatus;publicationDate:string;source:FrameworkSourceMetadata}
 export interface FrameworkSourceMetadata {officialReference:string;sourceURL:string;lastReviewedDate:string;validationStatus:'VALIDATED_PUBLIC_SUMMARY'|'REFERENCE_REQUIRES_VALIDATION';needsSourceValidation:boolean}
@@ -36,7 +36,8 @@ export interface FindingHistory {id:string;findingId:string;status:string;actor:
 export type EvidenceQuality='VERIFIED'|'REVIEWED'|'NEEDS_REVIEW'|'STALE'
 export interface Evidence {id:string;organizationId:string;systemId:string;testResultId?:string;controlId?:string;title:string;quality:EvidenceQuality;collectedAt:string;reference:EvidenceReference}
 export interface EvidenceReference {kind:'DEMO_ARTIFACT'|'POLICY'|'TRACE'|'TEST_OUTPUT';uri:string;sha256:string}
-export interface MonitoringMetric {id:string;systemId:string;name:string;unit:string;baseline:number;current:number;threshold:number;delta:number;status:'NORMAL'|'REGRESSION_DETECTED'}
+export type MetricDirection='HIGHER_IS_BETTER'|'LOWER_IS_BETTER'
+export interface MonitoringMetric {id:string;systemId:string;name:string;unit:string;direction:MetricDirection;baseline:number;current:number;threshold:number;delta:number;status:'NORMAL'|'REGRESSION_DETECTED'}
 export interface MonitoringBaseline {id:string;systemId:string;versionId:string;metrics:MonitoringMetric[];createdAt:string}
 export type ChangeKind='MODEL_CHANGED'|'MODEL_VERSION_CHANGED'|'SYSTEM_PROMPT_CHANGED'|'RAG_SOURCE_CHANGED'|'KNOWLEDGE_BASE_CHANGED'|'TOOL_ADDED'|'TOOL_REMOVED'|'PERMISSION_CHANGED'|'POLICY_CHANGED'|'CONFIG_CHANGED'
 export interface MonitoringEvent {id:string;organizationId:string;systemId:string;kind:ChangeKind;occurredAt:string;summary:string;evaluationId?:string}
@@ -45,7 +46,8 @@ export interface ReleasePolicyRule {id:string;condition:'CRITICAL_OPEN_FINDING'|
 export interface ReleasePolicy {id:string;organizationId:string;name:string;rules:ReleasePolicyRule[]}
 export interface ReleaseGate {id:string;organizationId:string;systemId:string;versionId:string;policyId:string;decision:'BLOCKED'|'REVIEW_REQUIRED'|'READY';reasons:string[];evaluatedAt:string}
 export interface ReleaseDecision {id:string;gateId:string;decision:string;actor:string;timestamp:string;reason:string}
-export interface ReleaseOverride {id:string;gateId:string;owner:string;rationale:string;expiresAt:string;approvedBy:string}
+export interface ReleaseOverride {id:string;gateId:string;owner:string;rationale:string;approvedBy:string;expiresAt:string;timestamp:string;organizationId:string}
+
 export interface AuditEvent {id:string;organizationId:string;actor:string;action:string;objectType:string;objectId:string;timestamp:string;previousState?:string;newState?:string;reason?:string}
 export interface Notification {id:string;organizationId:string;title:string;body:string;createdAt:string;read:boolean}
 export interface Integration {id:string;organizationId:string;name:string;status:'CONNECTED'|'NOT_CONNECTED'}

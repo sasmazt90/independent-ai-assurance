@@ -1,4 +1,19 @@
 import type {Finding,TestResult} from '../../domain/models'
 export type ScoreRule={failHigh:number;failMedium:number;failLow:number;review:number;missingEvidence:number}
+export type ScoreDeduction={id:string;label:string;amount:number;controlId?:string;testResultId?:string;findingId?:string}
 export const defaultScoreRule:ScoreRule={failHigh:8,failMedium:4,failLow:2,review:3,missingEvidence:4}
-export function assuranceScore(results:TestResult[],findings:Finding[],rule=defaultScoreRule){const open=findings.filter(f=>!['RESOLVED','RISK_ACCEPTED'].includes(f.status));const deductions:({id:string;label:string;amount:number;resultId?:string;findingId?:string})[]=[];for(const r of results){if(r.result==='FAIL'){const amount=r.severity==='HIGH'||r.severity==='CRITICAL'?rule.failHigh:r.severity==='MEDIUM'?rule.failMedium:rule.failLow;const f=open.find(x=>x.testResultId===r.id);deductions.push({id:`deduct-${r.id}`,label:f?.title??r.controlId,amount,resultId:r.id,findingId:f?.id})}else if(r.result==='REVIEW') deductions.push({id:`deduct-${r.id}`,label:`Review required: ${r.controlId}`,amount:rule.review,resultId:r.id})}const assessed=new Set(results.map(r=>r.controlId));for(const id of assessed){const hasEvidence=results.some(r=>r.controlId===id&&r.evidenceIds.length>0);if(!hasEvidence)deductions.push({id:`evidence-${id}`,label:`Missing evidence: ${id}`,amount:rule.missingEvidence})}const total=deductions.reduce((n,d)=>n+d.amount,0);return{baseline:100,deductions,score:Math.max(0,100-total)}}
+export function assuranceScore(results:TestResult[],findings:Finding[],rule=defaultScoreRule){
+ const open=findings.filter(f=>!['RESOLVED','RISK_ACCEPTED'].includes(f.status))
+ const deductions:ScoreDeduction[]=[]
+ for(const result of results){
+  if(result.result==='FAIL'){
+   const amount=result.severity==='HIGH'||result.severity==='CRITICAL'?rule.failHigh:result.severity==='MEDIUM'?rule.failMedium:rule.failLow
+   const finding=open.find(item=>item.testResultId===result.id)
+   deductions.push({id:`deduct-${result.id}`,label:finding?.title??result.controlId,amount,controlId:result.controlId,testResultId:result.id,findingId:finding?.id})
+  }else if(result.result==='REVIEW')deductions.push({id:`deduct-${result.id}`,label:`Review required: ${result.controlId}`,amount:rule.review,controlId:result.controlId,testResultId:result.id})
+ }
+ const assessed=new Set(results.map(result=>result.controlId))
+ for(const controlId of assessed){const hasEvidence=results.some(result=>result.controlId===controlId&&result.evidenceIds.length>0);if(!hasEvidence)deductions.push({id:`evidence-${controlId}`,label:`Missing evidence: ${controlId}`,amount:rule.missingEvidence,controlId})}
+ const total=deductions.reduce((sum,item)=>sum+item.amount,0)
+ return{baseline:100,deductions,score:Math.max(0,100-total)}
+}

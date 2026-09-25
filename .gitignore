@@ -9,7 +9,7 @@ out/
 build/
 dist/
 dist-ssr/
-coverage/
+/coverage/
 *.tsbuildinfo
 
 # Environment files and secrets
