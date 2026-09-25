@@ -1,0 +1,15 @@
+import {notFound} from 'next/navigation'
+import {Overview} from '@/features/overview/Overview'
+import {Systems} from '@/features/systems/Systems'
+import {Evaluations} from '@/features/evaluations/Evaluations'
+import {Findings} from '@/features/findings/Findings'
+import {Monitoring} from '@/features/monitoring/Monitoring'
+import {ReleaseGates} from '@/features/release/ReleaseGates'
+import {Controls} from '@/features/controls/Controls'
+import {Compliance} from '@/features/compliance/Compliance'
+import {EvidencePage} from '@/features/evidence/EvidencePage'
+import {Reports} from '@/features/reports/Reports'
+import {Integrations} from '@/features/integrations/Integrations'
+import {SettingsPage} from '@/features/settings/SettingsPage'
+const pages:Record<string,React.ComponentType>={overview:Overview,systems:Systems,evaluations:Evaluations,findings:Findings,monitoring:Monitoring,release:ReleaseGates,controls:Controls,compliance:Compliance,evidence:EvidencePage,reports:Reports,integrations:Integrations,settings:SettingsPage}
+export default async function RoutePage({params}:{params:Promise<{section:string}>}){const {section}=await params;const Component=pages[section];if(!Component)notFound();return <Component/>}

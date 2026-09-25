@@ -1,0 +1,5 @@
+'use client'
+import {useTranslations} from 'next-intl'
+import {PageHeading,StatusPill} from '@/components/assurance/shared'
+const records=[['Model registry','Version and ownership metadata','NOT_CONNECTED'],['Cloud logging','Operational signals and traces','NOT_CONNECTED'],['Issue management','Remediation workflow linking','NOT_CONNECTED'],['Identity provider','Enterprise authentication; mock role session','DEMO_ONLY']]
+export function Integrations(){const t=useTranslations();return <><PageHeading namespace="integrations" titleKey="title" subtitleKey="subtitle"/><section className="panel"><div className="integration-list">{records.map(([name,description,status])=><article className="integration-row" key={name}><span className="integration-icon">IN</span><span><b>{name}</b><small>{description}</small></span><StatusPill status={status}/><button className="btn outline" disabled>{t('settings.title')}</button></article>)}</div><p className="notice-box">No external connector is active, and no data is transmitted.</p></section></>}

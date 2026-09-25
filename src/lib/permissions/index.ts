@@ -1,0 +1,3 @@
+import type {Permission,Role} from '../../domain/models'
+const grants:Record<Role,Permission[]>={ORG_ADMIN:['system:read','system:write','evaluation:run','finding:manage','release:approve','risk:accept','report:export','framework:publish'],GOVERNANCE_MANAGER:['system:read','system:write','evaluation:run','finding:manage','release:approve','risk:accept','report:export'],AUDITOR:['system:read','report:export'],SYSTEM_OWNER:['system:read','system:write','evaluation:run','finding:manage'],REVIEWER:['system:read','finding:manage','release:approve'],VIEWER:['system:read']}
+export const hasPermission=(role:Role,permission:Permission)=>grants[role].includes(permission)

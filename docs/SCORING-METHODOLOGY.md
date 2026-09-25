@@ -1,12 +1,5 @@
 # Scoring Methodology
 
-Demo score (0–100) is the configured weighted average of domain performance, reduced by disclosed failed-control and unresolved-review deductions, clamped to 0–100. Category weights and deductions are product configuration, not law or a recognized framework formula. The demo overview uses fixed seeded values for explanatory display.
+The deterministic assurance score starts at 100 and subtracts configured deductions for failed results by severity, review-required results and controls without evidence. Rules live in `src/lib/scoring`; the score is bounded at zero. The waterfall is generated from those deduction records.
 
-Keep these measures separate:
-
-- **Assurance score:** deterministic summary of configured evaluation outcomes.
-- **Risk:** impact and likelihood in the system context, adjusted for scope, sensitivity, autonomy, affected users and reversibility.
-- **Coverage:** current results for applicable controls divided by applicable controls.
-- **Confidence:** evidence quality, test coverage, sample size, evaluator reliability, freshness and repeatability.
-
-A score can remain high while a critical finding blocks release. Confidence does not reduce risk. Explanations should show contributing controls and deductions.
+Framework coverage is calculated from mapped controls and current test results. The current implementation does not fully account for system-type applicability, NOT_APPLICABLE statuses or evidence sufficiency as separate coverage statuses. Confidence is calculated separately from coverage, evidence quality, sample sufficiency, evaluator reliability, freshness and repeatability. Risk is calculated independently using contextual factors and is not derived from the assurance score.
