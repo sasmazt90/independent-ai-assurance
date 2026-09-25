@@ -1,29 +1,9 @@
 # Assurance Methodology
 
-## Purpose and independence
+This MVP presents evidence-linked evaluation, monitoring and release review. It does not certify systems or make legal-compliance determinations. Seeded test results are examples, not results from live systems.
 
-Provide repeatable, evidence-linked assessments of systems operated by others. The platform does not implement or optimize assessed systems and does not claim certification authority.
+The domain chain connects framework version and requirement, explicit mapping, master control/version, evaluation procedure, test case/result, evidence and finding. Finding state changes are validated and recorded as audit events. The seed contains the Medical HCP Assistant comparison (v3.7 to v3.8), including hallucination 1.8% to 4.7%, injection resistance 96 to 93, fairness indicator 77 to 72, and seeded sensitive-disclosure PASS.
 
-## Scope and classification
+Assurance score, coverage, confidence and risk are separate calculations. Confidence combines test coverage, evidence quality, sample size, evaluator reliability, freshness and repeatability. Risk uses likelihood, impact, data exposure, autonomy, affected-user count and reversibility. These demo formulas are not calibrated operational risk models.
 
-Register intended purpose, system type, deployment context, owner, users, affected groups, data sensitivity, autonomy, reversibility, dependencies and lifecycle status. Applicability is contextual and requires accountable human review.
-
-## Taxonomy and testing
-
-Controls span governance, risk, data governance, transparency, human oversight, reliability, safety, security, privacy, fairness, accuracy, robustness, documentation, traceability and lifecycle monitoring. Evaluation methods may be rule-based, reference-based, model-based, statistical, human or hybrid. Test results are bounded observations, not proof of legal compliance.
-
-## Evidence and findings
-
-Record test inputs, outputs, traces, evaluator/version, timestamp, system version, sample size and evidence provenance. Findings link to affected system versions, controls, evidence, severity, owner, status and remediation. Severity considers impact, likelihood, scope, data sensitivity, autonomy, affected users and reversibility. Confidence is separate from risk and depends on test coverage, evidence quality, sample size, evaluator reliability, freshness and repeatability.
-
-## Scoring
-
-Demo assurance score is deterministic: weighted average of control-domain performance on a 0–100 scale, with configured category weights and explicit failing/review deductions. It is an operational summary, not a regulatory standard. Risk is assessed separately. Coverage = applicable controls with a current result / applicable controls. Confidence describes strength of supporting evidence and is not added to risk.
-
-## Monitoring and release
-
-Monitor model, prompt, data, knowledge base, configuration and tool changes. Compare current results with a recorded baseline. Gate policy can block on unresolved critical findings, stale required evaluations or missing human review. Overrides require owner, rationale, expiry and an audit record. Human judgment remains necessary for applicability, fairness, oversight, risk acceptance and high-impact remediation.
-
-## Framework mapping and limits
-
-Map requirements to normalized master controls using versioned framework records. Preserve historical framework versions. Summaries are not legal interpretations. Unverified mappings must be marked for source validation. No assessment language implies legal advice, regulatory approval or certification.
+Monitoring regression uses an explicit direction on each metric. A change exactly equal to the configured adverse threshold is classified as a regression (`>=` for lower-is-better increases, `<=` for higher-is-better decreases).

@@ -1,9 +1,5 @@
 # Framework Mapping
 
-Framework records are data, not UI logic. Each record carries stable ID, name, version, status, issuer, source URL, publication metadata and source validation status. Requirement summaries and mappings can be added without changing prior assessment snapshots.
+Every displayed mapping is an explicit `FrameworkMapping` joining framework version, requirement and master control. The compliance matrix does not synthesize links using row or column positions. Unlinked controls display as not mapped. Relationships are FULL, PARTIAL, SUPPORTS or RELATED; a mapping is not an equivalence or certification claim.
 
-Initial families include EU AI Act (Regulation (EU) 2024/1689), ISO/IEC 42001:2023, ISO/IEC 23894:2023, NIST AI RMF 1.0, NIST Generative AI Profile (NIST AI 600-1), OWASP Top 10 for LLM Applications, and draft OWASP Agentic AI mapping. Public source metadata is linked from the framework catalog in `src/data/demo.ts`.
-
-EU AI Act themes include risk management, data governance, technical documentation, logging, transparency, human oversight, accuracy, robustness, cybersecurity, quality management and post-market monitoring. These are summarized themes, not reproduced legal requirements. NIST function mappings are Govern, Map, Measure and Manage; trustworthiness concepts include validity/reliability, safety, security/resilience, accountability/transparency, explainability, privacy and fairness. OWASP mappings are summaries only.
-
-ISO records use public metadata only. Clause-level mappings require licensed source validation and must remain `REFERENCE_REQUIRES_VALIDATION` until reviewed. All unvalidated mapping summaries set `needsSourceValidation: true`. Draft, active, superseded and retired statuses preserve standards evolution. No proprietary ISO content is copied.
+Seed metadata covers EU AI Act, ISO/IEC 42001, ISO/IEC 23894, NIST AI RMF 1.0, NIST AI RMF Generative AI Profile, OWASP LLM Top 10 and OWASP Agentic AI. Public framework text is represented as concise summaries. ISO summaries and OWASP source-dependent mappings are marked for authoritative validation; ISO clause text is not reproduced. EU and NIST records are summaries, not legal interpretations. Readiness is calculated from requirements, mappings, controls and test results.
