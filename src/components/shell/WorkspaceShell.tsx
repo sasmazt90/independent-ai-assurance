@@ -1,14 +1,11 @@
 'use client'
-import {createContext,useContext,useEffect,useMemo,useState} from 'react'
+import {useEffect,useMemo,useState} from 'react'
 import {Activity,BarChart3,Bell,Check,ChevronDown,ChevronLeft,ChevronRight,ClipboardCheck,FileText,FlaskConical,Globe,Grid2X2,HelpCircle,Layers3,LockKeyhole,Menu,Search,Settings,Shield,ShieldAlert,ShieldCheck,X} from 'lucide-react'
 import {useLocale,useTranslations} from 'next-intl'
 import {usePathname,useRouter} from '@/i18n/routing'
 import {organizations,systems,findings,controls,requirements,evidence} from '@/data/demo'
 import type {Locale} from '@/domain/models'
-type ThemePreference='light'|'dark'|'system'
-type WorkspaceContextValue={organizationId:string;setOrganizationId:(id:string)=>void;theme:ThemePreference;setTheme:(theme:ThemePreference)=>void}
-const WorkspaceContext=createContext<WorkspaceContextValue|null>(null)
-export function useWorkspace(){const value=useContext(WorkspaceContext);if(!value)throw new Error('Workspace context is unavailable');return value}
+import {WorkspaceContext,type ThemePreference} from './workspace-context'
 const nav=[{group:'workspace',items:[['overview','Overview',Grid2X2],['systems','AI systems',Layers3],['evaluations','Evaluations',FlaskConical],['findings','Findings',ShieldAlert],['monitoring','Monitoring',Activity],['release','Release gates',LockKeyhole]]},{group:'assurance',items:[['controls','Controls',ClipboardCheck],['compliance','Compliance',Shield],['evidence','Evidence',FileText],['reports','Reports',BarChart3]]},{group:'admin',items:[['integrations','Integrations',Globe],['settings','Settings',Settings]]}] as const
 export function WorkspaceShell({children}:{children:React.ReactNode}){
  const t=useTranslations();const navT=useTranslations('nav');const roleT=useTranslations('roles');const path=usePathname();const router=useRouter();const locale=useLocale() as Locale
